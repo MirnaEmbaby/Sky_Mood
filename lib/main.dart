@@ -1,8 +1,14 @@
+import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:skymood/layout/layout.dart';
+import 'package:skymood/shared/network/remote/dio_helper.dart';
+
+import 'shared/bloc_observer.dart';
 
 void main() {
+  Bloc.observer = MyBlocObserver();
+  DioHelper.init();
   runApp(const MyApp());
 }
 
