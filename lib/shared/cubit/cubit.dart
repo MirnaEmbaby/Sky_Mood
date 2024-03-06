@@ -12,6 +12,7 @@ class AppCubit extends Cubit<AppStates> {
   IconData weatherIcon = Icons.error_outline;
   int nowDegree = 00;
   String weatherDetail = 'weather detail here';
+  int cloud = 0;
   double windSpeed = 0.0;
   int humidity = 0;
   double uv = 0.0;
@@ -35,6 +36,7 @@ class AppCubit extends Cubit<AppStates> {
           '${value.data['location']['name']}, ${value.data['location']['country']}';
       nowDegree = current['temp_c'].round();
       weatherDetail = current['condition']['text'];
+      cloud = current['cloud'];
       windSpeed = current['wind_kph'];
       humidity = current['humidity'];
       uv = current['uv'];

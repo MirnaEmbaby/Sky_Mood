@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:skymood/shared/cubit/cubit.dart';
 
 Widget detailRow(BuildContext context, IconData icon, String detail) => Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon),
-        const SizedBox(
-          width: 2.0,
-        ),
+        Icon(icon, size: 18.0),
+        const SizedBox(width: 8.0),
         Text(
           detail,
           style: const TextStyle(
-            fontSize: 14.0,
+            fontSize: 16.0,
             fontFamily: 'RobotoCondensed',
           ),
         ),
@@ -25,7 +23,7 @@ Widget forecastItem(BuildContext context) => Row(
           child: Text(
             AppCubit.get(context).forecastDayDate,
             style: const TextStyle(
-              fontSize: 14.0,
+              fontSize: 16.0,
               fontFamily: 'RobotoCondensed',
             ),
           ),
