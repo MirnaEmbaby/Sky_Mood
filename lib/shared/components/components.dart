@@ -1,7 +1,22 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:skymood/shared/cubit/cubit.dart';
+
+Widget detailRow(BuildContext context, IconData icon, String detail) => Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(icon),
+        const SizedBox(
+          width: 2.0,
+        ),
+        Text(
+          detail,
+          style: const TextStyle(
+            fontSize: 14.0,
+            fontFamily: 'RobotoCondensed',
+          ),
+        ),
+      ],
+    );
 
 Widget forecastItem(BuildContext context) => Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -32,4 +47,11 @@ Widget forecastItem(BuildContext context) => Row(
           ),
         ),
       ],
+    );
+
+Widget forecastBuilder(BuildContext context, int index) => ListView.builder(
+      itemCount: 5,
+      itemBuilder: (context, index) => ListTile(
+        title: forecastItem(context),
+      ),
     );

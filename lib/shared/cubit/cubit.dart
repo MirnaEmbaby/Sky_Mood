@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skymood/shared/cubit/states.dart';
@@ -14,6 +13,8 @@ class AppCubit extends Cubit<AppStates> {
   int nowDegree = 00;
   String weatherDetail = 'weather detail here';
   double windSpeed = 0.0;
+  int humidity = 0;
+  double uv = 0.0;
 
   String forecastDayDate = 'fore day, date';
   IconData forecastIcon = Icons.error_outline;
@@ -30,12 +31,14 @@ class AppCubit extends Cubit<AppStates> {
     }).then((value) {
       var current = value.data['current'];
 
-      cityCountry = '${value.data['location']['name']}, ${value.data['location']['country']}';
+      cityCountry =
+          '${value.data['location']['name']}, ${value.data['location']['country']}';
       nowDegree = current['temp_c'].round();
       weatherDetail = current['condition']['text'];
       windSpeed = current['wind_kph'];
+      humidity = current['humidity'];
+      uv = current['uv'];
       debugPrint(windSpeed.toString());
-
 
       debugPrint(nowDegree.toString());
       emit(AppCurrentWeatherSuccessState());
@@ -44,4 +47,6 @@ class AppCubit extends Cubit<AppStates> {
       emit(AppCurrentWeatherErrorState(error.toString()));
     });
   }
+
+
 }

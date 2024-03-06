@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skymood/shared/components/components.dart';
 import 'package:skymood/shared/cubit/cubit.dart';
@@ -42,6 +39,7 @@ class AppLayout extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 20.0,
                         fontFamily: 'RobotoCondensed',
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     const Text(
@@ -51,9 +49,7 @@ class AppLayout extends StatelessWidget {
                         fontFamily: 'RobotoCondensed',
                       ),
                     ),
-                    const SizedBox(
-                      height: 40.0,
-                    ),
+                    const SizedBox(height: 40.0),
                     Icon(
                       cubit.weatherIcon,
                       size: 80.0,
@@ -65,9 +61,7 @@ class AppLayout extends StatelessWidget {
                         fontFamily: 'RobotoCondensed',
                       ),
                     ),
-                    const SizedBox(
-                      height: 15.0,
-                    ),
+                    const SizedBox(height: 15.0),
                     Text(
                       cubit.weatherDetail,
                       style: const TextStyle(
@@ -75,35 +69,12 @@ class AppLayout extends StatelessWidget {
                         fontFamily: 'RobotoCondensed',
                       ),
                     ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    const Text(
-                      'Wind',
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        fontFamily: 'RobotoCondensed',
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.air),
-                        const SizedBox(
-                          width: 2.0,
-                        ),
-                        Text(
-                          '${cubit.windSpeed}',
-                          style: const TextStyle(
-                            fontSize: 14.0,
-                            fontFamily: 'RobotoCondensed',
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 50.0,
-                    ),
+                    const SizedBox(height: 30.0),
+                    detailRow(context, Icons.air, '${cubit.windSpeed} km/h'),
+                    detailRow(context, Icons.water_drop_outlined,
+                        '${cubit.humidity}'),
+                    detailRow(context, Icons.wb_sunny_outlined, '${cubit.uv}'),
+                    const SizedBox(height: 40.0),
                     forecastItem(context),
                     forecastItem(context),
                     forecastItem(context),
