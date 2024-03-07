@@ -8,14 +8,17 @@ class AppCubit extends Cubit<AppStates> {
 
   static AppCubit get(context) => BlocProvider.of(context);
 
+  String key = '2b68054a61184b48a0110450242902';
+
   String cityCountry = 'cairo';
-  IconData weatherIcon = Icons.error_outline;
+  String imageUrl = 'link';
   int nowDegree = 00;
   String weatherDetail = 'weather detail here';
   int cloud = 0;
   double windSpeed = 0.0;
   int humidity = 0;
   double uv = 0.0;
+  String lastUpdated = 'last updated';
 
   String forecastDayDate = 'fore day, date';
   IconData forecastIcon = Icons.error_outline;
@@ -26,29 +29,28 @@ class AppCubit extends Cubit<AppStates> {
     emit(AppCurrentWeatherLoadingState());
 
     DioHelper.getData(url: 'v1/current.json', query: {
-      'key': '2b68054a61184b48a0110450242902',
+      'key': key,
       'q': 'egypt',
-      'aqi': 'yes',
+      'aqi': 'no',
     }).then((value) {
+
       var current = value.data['current'];
 
       cityCountry =
           '${value.data['location']['name']}, ${value.data['location']['country']}';
+      imageUrl = current['condition']['icon'];
       nowDegree = current['temp_c'].round();
       weatherDetail = current['condition']['text'];
       cloud = current['cloud'];
       windSpeed = current['wind_kph'];
       humidity = current['humidity'];
       uv = current['uv'];
-      debugPrint(windSpeed.toString());
+      lastUpdated = current['last_updated'];
 
-      debugPrint(nowDegree.toString());
       emit(AppCurrentWeatherSuccessState());
     }).catchError((error) {
       error.toString();
       emit(AppCurrentWeatherErrorState(error.toString()));
     });
   }
-
-
 }
