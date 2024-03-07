@@ -2,8 +2,10 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skymood/shared/components/components.dart';
+import 'package:skymood/shared/components/constants.dart';
 import 'package:skymood/shared/cubit/cubit.dart';
 import 'package:skymood/shared/cubit/states.dart';
+import 'package:weather_icons/weather_icons.dart';
 
 class AppLayout extends StatelessWidget {
   const AppLayout({super.key});
@@ -16,6 +18,8 @@ class AppLayout extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           AppCubit cubit = AppCubit.get(context);
+          var list = AppCubit.get(context).forecastItems;
+
           return SafeArea(
             child: Scaffold(
               backgroundColor: const Color(0xFFE6E6E6),
@@ -29,12 +33,12 @@ class AppLayout extends StatelessWidget {
                 ],
               ),
               body: ConditionalBuilder(
-                condition: state is! AppCurrentWeatherLoadingState,
+                condition: state is! AppWeatherLoadingState,
                 builder: (context) => Padding(
                   padding: const EdgeInsets.only(
                     left: 30.0,
                     right: 30.0,
-                    bottom: 6.0,
+                    bottom: 12.0,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -54,9 +58,12 @@ class AppLayout extends StatelessWidget {
                           fontFamily: 'RobotoCondensed',
                         ),
                       ),
-                      Image.network(
-                        'https:${cubit.imageUrl}',
-                        height: 100.0,
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      BoxedIcon(
+                        weatherIcons[cubit.weatherDetail]!,
+                        size: 60.0,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -109,12 +116,7 @@ class AppLayout extends StatelessWidget {
                         ],
                       ),
                       const Divider(height: 10.0, thickness: 0.5),
-                      const SizedBox(height: 15.0),
-                      forecastItem(context),
-                      forecastItem(context),
-                      forecastItem(context),
-                      forecastItem(context),
-                      forecastItem(context),
+                      forecastBuilder(context, list),
                       const SizedBox(height: 10.0),
                       Text(
                         'Last Updated on: ${cubit.lastUpdated}',

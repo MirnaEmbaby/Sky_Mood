@@ -2,12 +2,12 @@ abstract class AppStates {}
 
 class AppInitialState extends AppStates {}
 
-class AppCurrentWeatherLoadingState extends AppStates {}
+class AppWeatherLoadingState extends AppStates {}
 
-class AppCurrentWeatherSuccessState extends AppStates {}
+class AppWeatherSuccessState extends AppStates {}
 
-class AppCurrentWeatherErrorState extends AppStates {
+class AppWeatherErrorState extends AppStates {
   final String error;
 
-  AppCurrentWeatherErrorState(this.error);
+  AppWeatherErrorState(this.error);
 }

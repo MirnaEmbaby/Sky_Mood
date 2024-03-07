@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:skymood/shared/cubit/states.dart';
 import 'package:skymood/shared/network/remote/dio_helper.dart';
 
@@ -9,6 +9,8 @@ class AppCubit extends Cubit<AppStates> {
   static AppCubit get(context) => BlocProvider.of(context);
 
   String key = '2b68054a61184b48a0110450242902';
+
+  //*********current weather*********
 
   String cityCountry = 'cairo';
   String imageUrl = 'link';
@@ -20,19 +22,23 @@ class AppCubit extends Cubit<AppStates> {
   double uv = 0.0;
   String lastUpdated = 'last updated';
 
-  String forecastDayDate = 'fore day, date';
-  IconData forecastIcon = Icons.error_outline;
-  int forecastLowDegree = 0;
-  int forecastHighDegree = 0;
+  //*********forecast weather*********
+
+  List<dynamic> forecastItems = [];
+
+  String forecastFormattedDate = 'formatted date';
 
   void getCurrentWeather() {
-    emit(AppCurrentWeatherLoadingState());
+    emit(AppWeatherLoadingState());
 
-    DioHelper.getData(url: 'v1/current.json', query: {
+    DioHelper.getData(url: 'v1/forecast.json', query: {
       'key': key,
       'q': 'egypt',
+      'days': '4',
       'aqi': 'no',
+      'alerts': 'no',
     }).then((value) {
+      //********current*******
 
       var current = value.data['current'];
 
@@ -47,10 +53,17 @@ class AppCubit extends Cubit<AppStates> {
       uv = current['uv'];
       lastUpdated = current['last_updated'];
 
-      emit(AppCurrentWeatherSuccessState());
+      //********forecast*******
+
+      forecastItems = value.data['forecast']['forecastday'];
+
+      forecastFormattedDate =
+          DateFormat('M/d').format(DateTime.parse(forecastItems[0]['date']));
+
+      emit(AppWeatherSuccessState());
     }).catchError((error) {
       error.toString();
-      emit(AppCurrentWeatherErrorState(error.toString()));
+      emit(AppWeatherErrorState(error.toString()));
     });
   }
 }
