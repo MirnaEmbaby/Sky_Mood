@@ -12,4 +12,5 @@ const Map weatherIcons = {
   'Foggy': WeatherIcons.fog,
   'Windy': WeatherIcons.wind,
   'Hazy': WeatherIcons.day_haze,
+  'error' : WeatherIcons.alien,
 };

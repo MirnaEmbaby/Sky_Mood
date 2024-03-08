@@ -12,8 +12,7 @@ class AppCubit extends Cubit<AppStates> {
 
   //*********current weather*********
 
-  String cityCountry = 'cairo';
-  String imageUrl = 'link';
+  String cityCountry = 'abu dhabi';
   int nowDegree = 00;
   String weatherDetail = 'weather detail here';
   int cloud = 0;
@@ -25,7 +24,6 @@ class AppCubit extends Cubit<AppStates> {
   //*********forecast weather*********
 
   List<dynamic> forecastItems = [];
-
   String forecastFormattedDate = 'formatted date';
 
   void getCurrentWeather() {
@@ -33,7 +31,7 @@ class AppCubit extends Cubit<AppStates> {
 
     DioHelper.getData(url: 'v1/forecast.json', query: {
       'key': key,
-      'q': 'egypt',
+      'q': cityCountry,
       'days': '4',
       'aqi': 'no',
       'alerts': 'no',
@@ -44,7 +42,6 @@ class AppCubit extends Cubit<AppStates> {
 
       cityCountry =
           '${value.data['location']['name']}, ${value.data['location']['country']}';
-      imageUrl = current['condition']['icon'];
       nowDegree = current['temp_c'].round();
       weatherDetail = current['condition']['text'];
       cloud = current['cloud'];

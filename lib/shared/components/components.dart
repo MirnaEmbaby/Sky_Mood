@@ -38,7 +38,7 @@ Widget forecastItem(BuildContext context, listItem) => SizedBox(
             ),
             Center(
               child: BoxedIcon(
-                weatherIcons[listItem['day']['condition']['text']]!,
+                weatherIcons[listItem['day']['condition']['text']] ?? weatherIcons['error'],
                 size: 18.0,
               ),
             ),
