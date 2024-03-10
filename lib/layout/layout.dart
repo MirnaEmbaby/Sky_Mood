@@ -24,7 +24,6 @@ class AppLayout extends StatelessWidget {
           var list = AppCubit.get(context).forecastItems;
 
           return SafeArea(
-
             child: Scaffold(
               backgroundColor: const Color(0xFFE6E6E6),
               resizeToAvoidBottomInset: false,
@@ -54,7 +53,7 @@ class AppLayout extends StatelessWidget {
                             cubit.searchOnTap(cubit.filteredCities[index]);
                             searchController.clear();
                             FocusManager.instance.primaryFocus?.unfocus();
-                          } ,
+                          },
                           title: Text(
                             '${cubit.filteredCities[index]}, ${citiesCountries[cubit.filteredCities[index]]}',
                             style: const TextStyle(fontSize: 26.0),
@@ -63,120 +62,119 @@ class AppLayout extends StatelessWidget {
                       },
                     )
                   : ConditionalBuilder(
-                    condition: state is! AppWeatherLoadingState,
-                    builder: (context) => Padding(
-                      padding: const EdgeInsets.only(
-                        left: 30.0,
-                        right: 30.0,
-                        bottom: 12.0,
-                        top: 15.0,
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            cubit.cityCountry,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 20.0,
-                              fontFamily: 'RobotoCondensed',
-                              fontWeight: FontWeight.bold,
+                      condition: state is! AppWeatherLoadingState,
+                      builder: (context) => Padding(
+                        padding: const EdgeInsets.only(
+                          left: 30.0,
+                          right: 30.0,
+                          bottom: 12.0,
+                          top: 15.0,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              cubit.cityCountry,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 20.0,
+                                fontFamily: 'RobotoCondensed',
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 4.0),
-                          Text(
-                            cubit.localTime,
-                            style: const TextStyle(
-                              fontSize: 12.0,
-                              fontFamily: 'RobotoCondensed',
+                            const SizedBox(height: 4.0),
+                            Text(
+                              cubit.localTime,
+                              style: const TextStyle(
+                                fontSize: 12.0,
+                                fontFamily: 'RobotoCondensed',
+                              ),
                             ),
-                          ),
-                          const Text(
-                            'Now',
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              fontFamily: 'RobotoCondensed',
+                            const Text(
+                              'Now',
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                fontFamily: 'RobotoCondensed',
+                              ),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 15.0,
-                          ),
-                          BoxedIcon(
-                            weatherIcons[cubit.weatherDetail] ??
-                                weatherIcons['error'],
-                            size: 60.0,
-                          ),
-                          Row(
-                            mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(child: Container()),
-                              Center(
-                                child: Text(
-                                  cubit.nowDegree.toString(),
-                                  style: const TextStyle(
-                                    fontSize: 44.0,
-                                    fontFamily: 'RobotoCondensed',
-                                    fontWeight: FontWeight.bold,
+                            const SizedBox(
+                              height: 15.0,
+                            ),
+                            BoxedIcon(
+                              weatherIcons[cubit.weatherDetail] ??
+                                  weatherIcons['error'],
+                              size: 60.0,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(child: Container()),
+                                Center(
+                                  child: Text(
+                                    cubit.nowDegree.toString(),
+                                    style: const TextStyle(
+                                      fontSize: 44.0,
+                                      fontFamily: 'RobotoCondensed',
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const Expanded(
-                                child: Text(
-                                  '°',
-                                  style: TextStyle(
-                                    fontSize: 44.0,
-                                    fontFamily: 'RobotoCondensed',
+                                const Expanded(
+                                  child: Text(
+                                    '°',
+                                    style: TextStyle(
+                                      fontSize: 44.0,
+                                      fontFamily: 'RobotoCondensed',
+                                    ),
                                   ),
                                 ),
+                              ],
+                            ),
+                            const SizedBox(height: 15.0),
+                            Text(
+                              cubit.weatherDetail,
+                              style: const TextStyle(
+                                fontSize: 20.0,
+                                fontFamily: 'RobotoCondensed',
+                                fontWeight: FontWeight.w500,
                               ),
-                            ],
-                          ),
-                          const SizedBox(height: 15.0),
-                          Text(
-                            cubit.weatherDetail,
-                            style: const TextStyle(
-                              fontSize: 20.0,
-                              fontFamily: 'RobotoCondensed',
-                              fontWeight: FontWeight.w500,
                             ),
-                          ),
-                          const SizedBox(height: 20.0),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              detailRow(context, Icons.wb_cloudy_outlined,
-                                  '${cubit.cloud}'),
-                              detailRow(context, Icons.air,
-                                  '${cubit.windSpeed} km/h'),
-                              detailRow(context, Icons.water_drop_outlined,
-                                  '${cubit.humidity}'),
-                              detailRow(context, Icons.wb_sunny_outlined,
-                                  '${cubit.uv}'),
-                              const SizedBox(height: 15.0),
-                            ],
-                          ),
-                          const Divider(height: 10.0, thickness: 0.5),
-                          forecastBuilder(context, list),
-                          const SizedBox(height:25.0),
-                          Text(
-                            'Last Updated on: ${cubit.lastUpdated}',
-                            style: TextStyle(
-                              fontSize: 12.0,
-                              fontFamily: 'RobotoCondensed',
-                              color: Colors.grey[400],
+                            const SizedBox(height: 20.0),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                detailRow(context, Icons.wb_cloudy_outlined,
+                                    '${cubit.cloud}'),
+                                detailRow(context, Icons.air,
+                                    '${cubit.windSpeed} km/h'),
+                                detailRow(context, Icons.water_drop_outlined,
+                                    '${cubit.humidity}'),
+                                detailRow(context, Icons.wb_sunny_outlined,
+                                    '${cubit.uv}'),
+                                const SizedBox(height: 15.0),
+                              ],
                             ),
-                          ),
-                        ],
+                            const Divider(height: 10.0, thickness: 0.5),
+                            forecastBuilder(context, list),
+                            const SizedBox(height: 25.0),
+                            Text(
+                              'Last Updated on: ${cubit.lastUpdated}',
+                              style: TextStyle(
+                                fontSize: 12.0,
+                                fontFamily: 'RobotoCondensed',
+                                color: Colors.grey[400],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      fallback: (context) => const Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.blueGrey,
+                        ),
                       ),
                     ),
-                    fallback: (context) => const Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.blueGrey,
-                      ),
-                    ),
-                  ),
             ),
           );
         },

@@ -93,7 +93,7 @@ class AppCubit extends Cubit<AppStates> {
     emit(AppSearchSubmittedState());
   }
 
-  void searchOnTap(value){
+  void searchOnTap(value) {
     cityCountry = value;
     getCurrentWeather();
     changeShowSearchBody();
