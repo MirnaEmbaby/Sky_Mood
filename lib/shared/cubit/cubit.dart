@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:skymood/shared/components/constants.dart';
 import 'package:skymood/shared/cubit/states.dart';
 import 'package:skymood/shared/network/remote/dio_helper.dart';
 
@@ -12,7 +13,8 @@ class AppCubit extends Cubit<AppStates> {
 
   //*********current weather*********
 
-  String cityCountry = 'abu dhabi';
+  String cityCountry = 'cairo';
+  String localTime = 'local time';
   int nowDegree = 00;
   String weatherDetail = 'weather detail here';
   int cloud = 0;
@@ -42,12 +44,13 @@ class AppCubit extends Cubit<AppStates> {
 
       cityCountry =
           '${value.data['location']['name']}, ${value.data['location']['country']}';
-      nowDegree = current['temp_c'].round();
-      weatherDetail = current['condition']['text'];
-      cloud = current['cloud'];
-      windSpeed = current['wind_kph'];
-      humidity = current['humidity'];
-      uv = current['uv'];
+      localTime = value.data['location']['localtime'];
+      nowDegree = current['temp_c'].round() ?? 00;
+      weatherDetail = current['condition']['text'] ?? 'detail';
+      cloud = current['cloud'] ?? 00;
+      windSpeed = current['wind_kph'] ?? 00;
+      humidity = current['humidity'] ?? 00;
+      uv = current['uv'] ?? 00;
       lastUpdated = current['last_updated'];
 
       //********forecast*******
@@ -62,5 +65,46 @@ class AppCubit extends Cubit<AppStates> {
       error.toString();
       emit(AppWeatherErrorState(error.toString()));
     });
+  }
+
+  List<String> search(String value) {
+    if (value.isEmpty) {
+      return [];
+    }
+    return cities
+        .where((city) => city.toLowerCase().contains(value.toLowerCase()))
+        .take(5)
+        .toList();
+  }
+
+  List<String> filteredCities = [];
+
+  void searchOnChanged(value) {
+    filteredCities = search(value);
+    emit(AppSearchChangedState());
+  }
+
+  void searchOnSubmit(value) {
+    searchOnChanged(value);
+    cityCountry = filteredCities[0];
+    getCurrentWeather();
+    changeShowSearchBody();
+    filteredCities = [];
+    emit(AppSearchSubmittedState());
+  }
+
+  void searchOnTap(value){
+    cityCountry = value;
+    getCurrentWeather();
+    changeShowSearchBody();
+    filteredCities = [];
+    emit(AppSearchSubmittedState());
+  }
+
+  bool showSearchBody = false;
+
+  void changeShowSearchBody() {
+    showSearchBody = !showSearchBody;
+    emit(AppChangeShowSearchBodyState());
   }
 }

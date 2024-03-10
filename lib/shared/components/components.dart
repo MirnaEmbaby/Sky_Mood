@@ -38,7 +38,8 @@ Widget forecastItem(BuildContext context, listItem) => SizedBox(
             ),
             Center(
               child: BoxedIcon(
-                weatherIcons[listItem['day']['condition']['text']] ?? weatherIcons['error'],
+                weatherIcons[listItem['day']['condition']['text']] ??
+                    weatherIcons['error'],
                 size: 18.0,
               ),
             ),
@@ -68,6 +69,6 @@ Widget forecastBuilder(BuildContext context, list) => ConditionalBuilder(
         ),
       ),
       fallback: (context) => const Center(
-        child: CircularProgressIndicator(),
+        child: Center(child: CircularProgressIndicator()),
       ),
     );

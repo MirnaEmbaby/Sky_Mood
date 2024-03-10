@@ -11,3 +11,9 @@ class AppWeatherErrorState extends AppStates {
 
   AppWeatherErrorState(this.error);
 }
+
+class AppSearchSubmittedState extends AppStates{}
+
+class AppSearchChangedState extends AppStates{}
+
+class AppChangeShowSearchBodyState extends AppStates{}
